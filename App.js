@@ -20,6 +20,10 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { enableScreens } from 'react-native-screens';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
+import cartReducer from "./store/reducers/cart"
+import wishListReducer from "./store/reducers/wishlist"
+import {createStore, combineReducers} from "redux"
+import {Provider} from "react-redux"
 // const MainStack = createStackNavigator();
 // const WishStack = createStackNavigator();
 // const CartStack = createStackNavigator();
@@ -29,6 +33,13 @@ const WishStack = createNativeStackNavigator();
 const CartStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
+
+const rootReducer = combineReducers({
+  wishList: wishListReducer,
+  // cart: cartReducer
+});
+
+const store = createStore(rootReducer)
 
 function MainStackNav(){ 
   return(
@@ -77,9 +88,11 @@ function TabNav(){
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <TabNav />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <TabNav />
+      </NavigationContainer>
+     </Provider>
   );
 }
 

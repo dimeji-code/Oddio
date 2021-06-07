@@ -1,23 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useCallback, useState} from 'react';
-import { StyleSheet, Text, View, FlatList, Image, Button, Alert, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ImageBackground, Button, Alert, Dimensions } from 'react-native';
 import Color from "../constants/Colors"
 import {ITEMS} from "../data/dummy_data"
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+import {useSelector} from "react-redux"
+import {Ionicons} from "@expo/vector-icons"
 
 const WishListScreen = props =>{
 
-    const [currentData, setCurrentData] = useState(ITEMS.filter(item => item.isLiked === true))
+    const iths = useSelector(state => state.wishList.items)
+
+    const [currentData, setCurrentData] = useState(iths)
 
     // console.log(props)
     const handleRefresh = () => {
-         setCurrentData( ITEMS.filter(item => item.isLiked === true));
+        setCurrentData(iths);
+        // setCurrentData(iths);
     }
 
     useEffect(()=>{
-        // console.log(props);
         props.navigation.setOptions({ 
             headerStyle: {
                 backgroundColor: Color.accent,
@@ -28,40 +29,29 @@ const WishListScreen = props =>{
             }}   
     )})
 
+
+
     useEffect(()=>{
         const unsubscribe = props.navigation.addListener('focus', () => {
             // Alert.alert('Refreshed');
             handleRefresh();
         })
+        unsubscribe;
     })
 
-        // const renderList = item => {
-
-        //     return(
-        //     <View style={styles.box}>
-        //         <View style={styles.content}>
-        //             <View style={styles.image}>
-        //                 <Image style={{width:'100%',height:'100%'}} source={item.item.image}/>
-        //             </View>
-        //             <View style={styles.title}>
-        //               <Text numberOfLines={2} style={{color:'#170932', fontSize:21}}>{item.item.brand}</Text>
-        //               <Text style={{color:'#289C5D'}}>{item.item.price}</Text>
-        //             </View>
-        //         </View>
-        //     </View>
-        //     )
-        // }
-
-        const renderList = item => {
+        const renderList = item => { 
 
             return(
             <View style={styles.box}>
-                    <View style={styles.image}>
-                        <Image style={{width:'100%',height:'100%'}} source={item.item.image}/>
-                    </View>
-                    <View style={styles.title}>
-                      <Text numberOfLines={2} style={{color:'#170932', fontSize:21}}>{item.item.brand}</Text>
-                      <Text style={{color:'#289C5D'}}>{item.item.price}</Text>
+                    <Text numberOfLines={2} style={{color:'#170932', fontSize:21, fontFamily:'PingFang SC'}}>{item.item.brand}</Text>
+                    <View style={styles.image}>   
+                        <ImageBackground style={{width:'100%',height:'100%'}} source={{uri:item.item.image}}/>
+                        <View style={styles.detail}>
+                            <Text >
+                                <Text style={{fontSize:17,fontFamily:'Trebuchet MS'}}>$</Text><Text style={{color:'#03440C'}}>{item.item.price}</Text>
+                            </Text>
+                            <Ionicons size={23} color="grey" name="notifications-outline"/>
+                        </View>
                     </View>
             </View>
             )
@@ -69,15 +59,14 @@ const WishListScreen = props =>{
 
     return(
         <View style={styles.screen}>
-            <Button title="ready" onPress={ ()=>{}}/>
-            <FlatList  data={currentData} 
+            {/* <Button title="ready" onPress={ ()=>{}}/> */}
+            <FlatList  
+            data={currentData} 
             renderItem={renderList} 
             keyExtractor={(item)=>item.id} 
-            horizontal={true}
+            // horizontal={true}
             decelerationRate={0}
-            bounces={false}
-            // pagingEnabled={true}
-            // style={{width:'400%'}}
+            bounces={true}
             />
         </View>
     )
@@ -87,21 +76,7 @@ const styles = StyleSheet.create({
     screen:{
         flex: 1,
         backgroundColor: "#E6EAF5",
-        marginHorizontal:4,
 
-    },
-    // box:{
-    //     width:"100%",
-    //     height:160,
-    //     // backgroundColor: Color.accent,
-    //     backgroundColor: "#D4DAEA",
-    //     marginVertical:4,
-    //     borderWidth:0.3,
-    //     borderColor:"white",
-    //     shadowColor:"grey", shadowOpacity:0.35, shadowOffset:{x:2,y:4}
-    // },
-    content:{
-        flexDirection:'row',
     },
     image:{
         width:"100%",
@@ -110,21 +85,21 @@ const styles = StyleSheet.create({
         shadowColor:"grey", shadowOpacity:0.65, shadowOffset:{x:2,y:4}
     },
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
     box:{
         padding:10,
-        marginHorizontal:10,
-        width: windowWidth-10,
-        height: "80%",
-        // height:"70%",
-        // backgroundColor: Color.accent,
+        width:"100%",
+        height: 200,
         backgroundColor: "#D4DAEA",
-        // marginVertical:4,
-        // marginHorizontal:10,
         borderWidth:0.3,
         borderColor:"white",
         shadowColor:"grey", shadowOpacity:0.35, shadowOffset:{x:2,y:4}
     },
+    detail:{
+        width:"100%",
+        position:"absolute",
+        flexDirection:"row",
+        justifyContent:"space-between",
+        padding:5,
+    }
 })
 export default WishListScreen

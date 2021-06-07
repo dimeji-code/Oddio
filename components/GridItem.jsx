@@ -1,37 +1,69 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
 import Color from "../constants/Colors"
 import {Ionicons} from "@expo/vector-icons"
+import {useSelector, useDispatch} from "react-redux"
+import * as wishListActions from "../store/actions/wishlist"
+import {ITEMS} from "../data/dummy_data"
 
 const GridItem = props =>{
+    const dispatch = useDispatch()
     let likeState  = props.likeState;
-    const [isLiked,setIsLiked] = useState(likeState)
-    console.log("my props:",props);
+    // console.log(props)
+    let current = useSelector(state=>state.wishList.allItems).find(item => item.id === props.id)
+    let lik = current.isLiked
+    const [isLiked,setIsLiked] = useState(lik)
 
+    useEffect(() =>{
 
-function SwitchLikeState(){
+        console.log("whhyyyy meee ==============================================/n=======================")
+    },[likeState,current])
+
+    function SwitchIcon () {
         if (isLiked === true){
             return(<Ionicons name="heart-outline" size={25} color="red"/>)
-            console.log("it is liked")
+
         }else{
             return <Ionicons name="heart-dislike-outline" size={25} color="black"/>  
-            console.log("not liked")
+ 
 
         }
     }
 
+    const likeHandler = liked =>{
+        if (liked  === false){
+            dispatch(wishListActions.addToWishlist(props.id));
+            setIsLiked(true)
+            props.likeState = true
+            current.isLiked = true
+
+
+        }else{
+            dispatch(wishListActions.removeFromWishlist(props.id));
+            setIsLiked(false)
+            props.likeState = false
+            current.isLiked = false
+
+
+        }
+    }
+
+
     return(
         <View style={styles.list}>
             <TouchableOpacity style={styles.imgContainer} onPress={props.onPress}>
-                 <Image resizeMode='cover' style={{width:'100%', height:'100%', marginTop:0, backgroundColor:"white"}} source={props.image}/>
+                 <Image resizeMode='cover' style={{width:'100%', height:'100%', marginTop:0, backgroundColor:"white"}} source={{uri: props.image}}/>
             </TouchableOpacity>
             <Text style={{fontSize:15, fontWeight:'bold', marginLeft:5}}>{props.brand}</Text>
             <View style={{padding:8,flexDirection:'row',justifyContent:"space-between",alignItems:"flex-end"}}>
                 <Text style={{color:'green'}}>${props.price}</Text>
-                <TouchableOpacity >
-                     <Ionicons name="heart-dislike-outline" size={25} color="black"/>
+        {       <TouchableOpacity onPress={()=> likeHandler(isLiked)}>
+                     {/* <SwitchIcon /> */}
+                     {props.ven}
                 </TouchableOpacity>
+}
+
             </View>
         </View>
 
