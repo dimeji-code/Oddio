@@ -39,9 +39,13 @@ const ItemScreen = props=>{
                 </View>
                 <View style={{marginRight:"5%"}}>
                     <View style={styles.buttons}>
-                        <Text>Gift Item</Text>
+                        <View style={{paddingRight:5}}>
+                         <Text style={{ fontFamily:"PingFangSC-Medium"}}>Gift Item</Text>
+                        </View>
                         <TouchableOpacity>
-                            <Ionicons name="gift-outline" size={25} color="black" style={{ shadowOpacity:0.3,shadowOffset:{x:2,y:5}}}/>
+                            <View style={styles.gift}>
+                                <Ionicons name="gift-outline" size={25} color="white" style={{ shadowOpacity:0.3,shadowOffset:{x:2,y:5}}}/>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -81,6 +85,18 @@ const styles = StyleSheet.create({
     },
     buttons:{
         flexDirection:'row',
+        // backgroundColor:'red',
+        height:40,
+        minWidth:90, 
+        justifyContent:"space-between",
+        alignItems: 'center'
+    },
+    gift:{
+        backgroundColor:Color.home,
+        justifyContent:"center",
+        alignItems: 'center',
+        width:40, height:40,
+        borderRadius: 8
     }
 })
 

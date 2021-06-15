@@ -23,7 +23,7 @@ export const ITEMS = [
     new Item("m19","Boeplay H4 2nd Gen","https://cdn-images.farfetch-contents.com/15/54/61/18/15546118_31234761_600.jpg",99.99,["Headphones","Noise-cancelling","durable"],false),
     new Item("m20","Boeplay H95","https://i.gadgets360cdn.com/large/bang_olufsen_beoplay_h95_image_1598531350346.jpg",99.99,["Headphones","Noise-cancelling","durable","White"],false),
     new Item("m21","Sonos Roam speaker","https://cdn.vox-cdn.com/thumbor/WX0Mp2YVGT6hRHzQdhYj-lBOF-k=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/18958330/SonosBT.jpg",199.99,["Speaker","Wireless","durable","White"],false),
-    new Item("m22","Sony Extra Bass","https://cdn.shopify.com/s/files/1/0036/4806/1509/products/17790a900b296c6fd50eaeebbaabc7013e9cca3c_square2940955_1.jpg?v=1601862529",99.99,["Speaker","Portable","durable","Black"],false),
+    new Item("m22","Sony Extra Bass","https://cdn.shopify.com/s/files/1/0036/4806/1509/products/17790a900b296c6fd50eaeebbaabc7013e9cca3c_square2940955_1.jpg?v=1601862529",99.99,["Speaker","Portable","durable","Blue"],false),
     
 ]
 
