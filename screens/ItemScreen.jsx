@@ -3,10 +3,14 @@ import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity, FlatList } from 'react-native';
 import Color from "../constants/Colors"
 import {Ionicons} from "@expo/vector-icons"
+import StyledButton from "../components/StyledButton"
+import * as cartActions from "../store/actions/cart"
+import {useDispatch} from "react-redux"
 
 const ItemScreen = props=>{
 
     const item = props.route.params.headphoneItem;
+    const dispatch = useDispatch()
 
     useEffect(() =>
         props.navigation.setOptions({ 
@@ -38,15 +42,11 @@ const ItemScreen = props=>{
                     <FlatList style={{width:'100%'}} data={item.tags}  renderItem={(headphone)=>(<View style={styles.qualities}><Text >{headphone.item}</Text></View>)} keyExtractor={(item)=>item} />
                 </View>
                 <View style={{marginRight:"5%"}}>
-                    <View style={styles.buttons}>
-                        <View style={{paddingRight:5}}>
-                         <Text style={{ fontFamily:"PingFangSC-Medium"}}>Gift Item</Text>
-                        </View>
-                        <TouchableOpacity>
-                            <View style={styles.gift}>
-                                <Ionicons name="gift-outline" size={25} color="white" style={{ shadowOpacity:0.3,shadowOffset:{x:2,y:5}}}/>
-                            </View>
-                        </TouchableOpacity>
+                    <View style={styles.shadow}>
+                        <StyledButton color={Color.home} title="Gift Item" icon="gift-outline" />
+                    </View>
+                    <View style={styles.shadow}>
+                        <StyledButton color={Color.primary} title="Add to Cart" icon="cart-outline" onPress= {()=>{dispatch(cartActions.addToCart(item))}} />
                     </View>
                 </View>
             </View>
@@ -83,20 +83,11 @@ const styles = StyleSheet.create({
         justifyContent:"space-between",
         flexDirection:'row',
     },
-    buttons:{
-        flexDirection:'row',
-        // backgroundColor:'red',
-        height:40,
-        minWidth:90, 
-        justifyContent:"space-between",
-        alignItems: 'center'
-    },
-    gift:{
-        backgroundColor:Color.home,
-        justifyContent:"center",
-        alignItems: 'center',
-        width:40, height:40,
-        borderRadius: 8
+    shadow:{
+        elevation:5,
+        shadowOpacity:0.3,
+        shadowOffset:{x:1,y:2},
+        paddingBottom:8
     }
 })
 

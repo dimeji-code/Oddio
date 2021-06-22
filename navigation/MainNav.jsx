@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from "react-redux"
 
 import {Ionicons} from "@expo/vector-icons"
 import {createStackNavigator} from '@react-navigation/stack'
@@ -19,6 +20,7 @@ import GiftScreen from '../screens/GiftScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import ItemScreen from '../screens/ItemScreen'
 import Colors from "../constants/Colors"
+
 
 enableScreens();
 const MainStack = createNativeStackNavigator();
@@ -71,11 +73,25 @@ export const MainStackNav = ()=> {
     )
   }
  export const TabNav = () =>{
+
+  const cartNum = useSelector(state => state.cart.totalItems)
+
     return(
       <Tab.Navigator tabBarOptions={{activeTintColor:Colors.homeStrong}}>
-        <Tab.Screen name="HOME" component={DrawerNav} options={{tabBarIcon:({color})=>(<Ionicons name = "home-outline" size={23} color={color} />)}} />
-        <Tab.Screen name="WISHLIST" component={WishStackNav} options={{tabBarIcon:({color})=>(<Ionicons name = "bookmarks-outline" size={23} color={color} />)}} />
-        <Tab.Screen name="CART" component={CartStackNav} options={{tabBarIcon:({color})=>(<Ionicons name = "cart-outline" size={23} color={color} />)}} />
+        <Tab.Screen 
+        name="HOME" 
+        component={DrawerNav} 
+        options={{tabBarIcon:({color})=>(<Ionicons name = "home-outline" size={23} color={color} />)}} />
+        <Tab.Screen 
+        name="WISHLIST" 
+        component={WishStackNav} 
+        options={{tabBarIcon:({color})=>(<Ionicons name = "bookmarks-outline" size={23} color={color} />)}} />
+        <Tab.Screen 
+        name="CART" 
+        component={CartStackNav} 
+        options={{
+          tabBarBadge:cartNum,
+          tabBarIcon:({color})=>(<Ionicons name = "cart-outline" size={23} color={color} />)}} />
       </Tab.Navigator>
     )
   }

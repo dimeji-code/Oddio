@@ -15,7 +15,7 @@ import {Provider} from "react-redux"
 const rootReducer = combineReducers({
   auth: authReducer,
   wishList: wishListReducer,
-  // cart: cartReducer,
+  cart: cartReducer,
 });
 
 const store = createStore(rootReducer)

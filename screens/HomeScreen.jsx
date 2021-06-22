@@ -33,7 +33,7 @@ const HomeScreen = props =>{
 
 const handleRefresh = () => {
      setInitData(allItems)
-    console.log(allItems)
+    // console.log(allItems)
 }
 
     useEffect(() => {
