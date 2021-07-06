@@ -1,5 +1,6 @@
 # Oddio
 audio hardware ecommerce application.  React Native
+(Inspired by different Udemy Tutorials)
 
 ![IMG_8731](https://user-images.githubusercontent.com/34945097/123008768-7ca37700-d389-11eb-8ecb-ee6b05898473.PNG)
 
